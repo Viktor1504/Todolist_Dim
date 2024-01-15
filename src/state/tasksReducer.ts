@@ -16,15 +16,17 @@ const initialState: TasksStateType = {
     ]
 }
 
-export const tasksReducer = (state: TasksStateType = initialState, {type, payload}: TasksReducerType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, {
+    type,
+    payload
+}: TasksReducerType): TasksStateType => {
     switch (type) {
         case 'ADD-TASK' : {
             const newTask = {id: v1(), title: payload.title, isDone: false}
-            const existingTasks = state[payload.todolistId] || [];
 
             return {
                 ...state,
-                [payload.todolistId]: [newTask, ...existingTasks]
+                [payload.todolistId]: [newTask, ...state[payload.todolistId]]
             }
         }
         case 'REMOVE-TASK' : {

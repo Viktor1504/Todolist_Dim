@@ -1,19 +1,21 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {IconButton, TextField} from '@mui/material';
 import {ControlPoint} from '@mui/icons-material';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
-export const AddItemForm = (props: AddItemFormPropsType) => {
-
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
+    console.log('AddItemForm is called')
     const [newTaskTitle, setNewTaskTitle] = useState<string>('')
-    const [error, setError] = useState<string | undefined>(undefined)
+    const [error, setError] = useState<string | null>(null)
     const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(e.currentTarget.value)
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError('')
+        if (error !== null) {
+            setError(null)
+        }
         if (e.key === 'Enter' && newTaskTitle.trim() !== '') {
             props.addItem(newTaskTitle)
             setNewTaskTitle('')
@@ -26,7 +28,6 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
         } else {
             setError('Title is required')
         }
-
     }
 
     return (
@@ -44,4 +45,4 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
             </IconButton>
         </div>
     )
-}
+})

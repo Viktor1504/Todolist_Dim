@@ -3,13 +3,19 @@ import {v1} from 'uuid';
 
 export const todolistId1 = v1()
 export const todolistId2 = v1()
+export const todolistId3 = v1()
+export const todolistId4 = v1()
+export const todolistId5 = v1()
 
 const initialState: TodolistType[] = [
     {id: todolistId1, title: 'What to learn', filter: 'all'},
     {id: todolistId2, title: 'What to buy', filter: 'all'}
 ]
 
-export const todolistsReducer = (state: TodolistType[] = initialState, {type, payload}: TodolistsReducerType): TodolistType[] => {
+export const todolistsReducer = (state: TodolistType[] = initialState, {
+    type,
+    payload
+}: TodolistsReducerType): TodolistType[] => {
     switch (type) {
         case 'ADD-TODOLIST' : {
             const newTodolist: TodolistType = {id: payload.todolistId, title: payload.title, filter: 'all'}

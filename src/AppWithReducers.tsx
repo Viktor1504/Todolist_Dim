@@ -21,13 +21,11 @@ import {
 import {v1} from 'uuid';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
-
 export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
 }
-
 export type TasksStateType = {
     [key: string]: TaskType[]
 }
@@ -73,8 +71,9 @@ function AppWithReducers() {
     }
 
     const addTodolist = (title: string) => {
-        dispatchToTodolistsReducer(addTodolistAC(title));
-        dispatchToTasksReducer(addTodolistAC(title))
+        const action = addTodolistAC(title)
+        dispatchToTodolistsReducer(action)
+        dispatchToTasksReducer(action)
     }
 
     const removeTodolist = (todolistId: string) => {
