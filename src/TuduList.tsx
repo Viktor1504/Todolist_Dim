@@ -72,17 +72,35 @@ export const TodoList = memo((props: TodoListPropsType) => {
                 }
             </ul>
             <div>
-                <Button color={'success'} variant={props.filter === 'all' ? 'contained' : 'text'}
-                        onClick={onAllClickHandler}>All
-                </Button>
-                <Button color={'primary'} variant={props.filter === 'active' ? 'contained' : 'text'}
-                        onClick={onActiveClickHandler}>Active
-                </Button>
-                <Button color={'secondary'} variant={props.filter === 'completed' ? 'contained' : 'text'}
-                        onClick={onCompletedClickHandler}>Completed
-                </Button>
+
+                <MyButton color={'success'} variant={props.filter === 'all' ? 'contained' : 'text'}
+                          onClick={onAllClickHandler} name={'All'}/>
+                <MyButton color={'primary'} variant={props.filter === 'active' ? 'contained' : 'text'}
+                          onClick={onActiveClickHandler} name={'Active'}/>
+                <MyButton color={'secondary'} variant={props.filter === 'completed' ? 'contained' : 'text'}
+                          onClick={onCompletedClickHandler} name={'Completed'}/>
+
+                {/*<Button color={'success'} variant={props.filter === 'all' ? 'contained' : 'text'}*/}
+                {/*        onClick={onAllClickHandler}>All*/}
+                {/*</Button>*/}
+                {/*<Button color={'primary'} variant={props.filter === 'active' ? 'contained' : 'text'}*/}
+                {/*        onClick={onActiveClickHandler}>Active*/}
+                {/*</Button>*/}
+                {/*<Button color={'secondary'} variant={props.filter === 'completed' ? 'contained' : 'text'}*/}
+                {/*        onClick={onCompletedClickHandler}>Completed*/}
+                {/*</Button>*/}
             </div>
         </div>
     )
 })
 
+type MyButtonPropsType = {
+    color: 'success' | 'primary' | 'secondary'
+    variant: 'contained' | 'text'
+    name: string
+    onClick: () => void
+}
+
+export const MyButton = memo((props: MyButtonPropsType) => {
+    return <Button color={props.color} variant={props.variant} onClick={props.onClick}>{props.name}</Button>
+})
