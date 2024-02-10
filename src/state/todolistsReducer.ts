@@ -1,24 +1,27 @@
-import {FilterValuesType, TodolistType} from '../AppWithReducers';
 import {v1} from 'uuid';
+import {TodolistType} from '../api/todolists-api';
 
 export const todolistId1 = v1()
 export const todolistId2 = v1()
-export const todolistId3 = v1()
-export const todolistId4 = v1()
-export const todolistId5 = v1()
 
-const initialState: TodolistType[] = [
-    {id: todolistId1, title: 'What to learn', filter: 'all'},
-    {id: todolistId2, title: 'What to buy', filter: 'all'}
+const initialState: TodolistDomainType[] = [
+    {id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
+    {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0}
 ]
 
-export const todolistsReducer = (state: TodolistType[] = initialState, {
+export const todolistsReducer = (state: TodolistDomainType[] = initialState, {
     type,
     payload
-}: TodolistsReducerType): TodolistType[] => {
+}: TodolistsReducerType): TodolistDomainType[] => {
     switch (type) {
         case 'ADD-TODOLIST' : {
-            const newTodolist: TodolistType = {id: payload.todolistId, title: payload.title, filter: 'all'}
+            const newTodolist: TodolistDomainType = {
+                id: payload.todolistId,
+                title: payload.title,
+                filter: 'all',
+                addedDate: '',
+                order: 0
+            }
             return [newTodolist, ...state]
         }
         case 'REMOVE-TODOLIST' : {
@@ -41,6 +44,12 @@ export type AddTodolistType = ReturnType<typeof addTodolistAC>
 export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
 type ChangeTodolistTitleType = ReturnType<typeof changeTodolistTitleAC>
 type ChangeFilterType = ReturnType<typeof changeFilterAC>
+
+
+export type FilterValuesType = 'all' | 'active' | 'completed'
+export type TodolistDomainType = TodolistType & {
+    filter: FilterValuesType
+}
 
 export const addTodolistAC = (title: string) => {
     return {type: 'ADD-TODOLIST', payload: {todolistId: v1(), title}} as const

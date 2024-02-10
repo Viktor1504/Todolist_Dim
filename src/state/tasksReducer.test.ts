@@ -1,12 +1,7 @@
-import {
-    tasksReducer,
-    addTaskAC,
-    removeTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC
-} from './tasksReducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasksReducer';
 import {v1} from 'uuid';
 import {addTodolistAC} from './todolistsReducer';
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api';
 
 test('correct task should be added to the specified todolist', () => {
     let todolistId1 = v1();
@@ -15,14 +10,56 @@ test('correct task should be added to the specified todolist', () => {
 
     const startState = {
         [todolistId1]: [
-            {id: v1(), title: 'CSS&HTML', isDone: true},
-            {id: v1(), title: 'JS', isDone: false},
-            {id: v1(), title: 'React', isDone: true},
+            {
+                id: v1(),
+                title: 'CSS&HTML',
+                status: TaskStatuses.New,
+                todoListId: todolistId1,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: 'JS',
+                status: TaskStatuses.Completed,
+                todoListId: todolistId1,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ],
         [todolistId2]: [
-            {id: v1(), title: 'Book', isDone: true},
-            {id: v1(), title: 'Milk', isDone: false},
-            {id: v1(), title: 'React', isDone: true}
+            {
+                id: v1(),
+                title: 'Book',
+                todoListId: todolistId2,
+                status: TaskStatuses.New,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: 'Milk',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ]
     };
 
@@ -33,7 +70,7 @@ test('correct task should be added to the specified todolist', () => {
     expect(endState[todolistId2].length).toBe(4);
     expect(endState[todolistId2][0].id).toBeDefined();
     expect(endState[todolistId2][0].title).toBe(newTaskTitle);
-    expect(endState[todolistId2][0].isDone).toBe(false);
+    expect(endState[todolistId2][0].status).toBe(TaskStatuses.New);
 });
 
 test('correct task should be removed from the specified todolist', () => {
@@ -43,13 +80,44 @@ test('correct task should be removed from the specified todolist', () => {
 
     const startState = {
         [todolistId1]: [
-            {id: taskId1, title: 'Task 1', isDone: false},
-            {id: v1(), title: 'Task 2', isDone: true},
+            {
+                id: taskId1,
+                title: 'Task 1',
+                todoListId: todolistId1,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
         ],
         [todolistId2]: [
-            {id: v1(), title: 'Book', isDone: true},
-            {id: v1(), title: 'Milk', isDone: false},
-            {id: v1(), title: 'React', isDone: true}
+            {
+                id: v1(),
+                title: 'Book',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: 'Milk',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ]
     };
 
@@ -68,20 +136,51 @@ test('correct task status should be changed in the specified todolist', () => {
 
     const startState = {
         [todolistId1]: [
-            {id: taskId1, title: 'Task 1', isDone: false},
-            {id: v1(), title: 'Task 2', isDone: true},
+            {
+                id: taskId1,
+                title: 'Task 1',
+                todoListId: todolistId1,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
         ],
         [todolistId2]: [
-            {id: v1(), title: 'Book', isDone: true},
-            {id: v1(), title: 'Milk', isDone: false},
-            {id: v1(), title: 'React', isDone: true}
+            {
+                id: v1(),
+                title: 'Book',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: 'Milk',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ]
     };
 
-    const action = changeTaskStatusAC(todolistId1, taskId1, true);
+    const action = changeTaskStatusAC(todolistId1, taskId1, TaskStatuses.Completed);
     const endState = tasksReducer(startState, action);
 
-    expect(endState[todolistId1][0].isDone).toBeTruthy()
+    expect(endState[todolistId1][0].status === TaskStatuses.Completed).toBeTruthy()
 });
 
 test('correct task title should be changed in the specified todolist', () => {
@@ -92,13 +191,44 @@ test('correct task title should be changed in the specified todolist', () => {
 
     const startState = {
         [todolistId1]: [
-            {id: taskId1, title: 'Task 1', isDone: false},
-            {id: v1(), title: 'Task 2', isDone: true},
+            {
+                id: taskId1,
+                title: 'Task 1',
+                todoListId: todolistId1,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
         ],
         [todolistId2]: [
-            {id: v1(), title: 'Book', isDone: true},
-            {id: v1(), title: 'Milk', isDone: false},
-            {id: v1(), title: 'React', isDone: true}
+            {
+                id: v1(),
+                title: 'Book',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: 'Milk',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ]
     };
 
@@ -115,15 +245,47 @@ test('correct todolist should be added', () => {
 
     const startState = {
         [todolistId1]: [
-            {id: v1(), title: 'Task 1', isDone: false},
-            {id: v1(), title: 'Task 2', isDone: true},
+            {
+                id: v1(),
+                title: 'Task 1',
+                todoListId: todolistId1,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
         ],
         [todolistId2]: [
-            {id: v1(), title: 'Book', isDone: true},
-            {id: v1(), title: 'Milk', isDone: false},
-            {id: v1(), title: 'React', isDone: true}
+            {
+                id: v1(),
+                title: 'Book',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            },
+            {
+                id: v1(),
+                title: 'Milk',
+                todoListId: todolistId2,
+                status: TaskStatuses.Completed,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                order: 0,
+                priority: TaskPriorities.Low,
+                description: ''
+            }
         ]
     };
+
 
     const action = addTodolistAC(newTodolistId);
     const endState = tasksReducer(startState, action);
