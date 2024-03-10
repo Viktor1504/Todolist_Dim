@@ -1,8 +1,7 @@
 import {action} from '@storybook/addon-actions';
 import {Task} from './Task';
 import React from 'react';
-import {TaskPriorities, TaskStatuses} from './api/todolists-api';
-import {todolistId1} from './state/todolistsReducer';
+import {TaskPriorities, TaskStatuses} from './api/todolists-api.js';
 
 export default {
     title: 'Task Component',
@@ -22,7 +21,7 @@ export const TaskBaseExample = () => {
                 id: '1',
                 status: TaskStatuses.Completed,
                 title: 'CSS',
-                todoListId: todolistId1,
+                todoListId: 'todolistId1',
                 startDate: '',
                 deadline: '',
                 addedDate: '',
@@ -40,7 +39,7 @@ export const TaskBaseExample = () => {
                 id: '2',
                 status: TaskStatuses.New,
                 title: 'JS',
-                todoListId: todolistId1,
+                todoListId: 'todolistId1',
                 startDate: '',
                 deadline: '',
                 addedDate: '',

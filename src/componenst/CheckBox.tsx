@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {Checkbox} from '@mui/material';
-import {TaskStatuses} from '../api/todolists-api';
+import {TaskStatuses} from '../api/todolists-api.js';
 
 type CheckBoxType = {
     changeTaskStatus: (value: boolean) => void

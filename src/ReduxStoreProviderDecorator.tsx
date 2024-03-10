@@ -1,8 +1,8 @@
-import {todolistId1, todolistsReducer} from './state/todolistsReducer';
+import {todolistsReducer} from './state/todolists-reducer';
 import {v1} from 'uuid';
 import {combineReducers} from 'redux';
-import {tasksReducer} from './state/tasksReducer';
-import {TaskPriorities, TaskStatuses} from './api/todolists-api';
+import {tasksReducer} from './state/tasks-reducer';
+import {TaskPriorities, TaskStatuses} from './api/todolists-api.js';
 import {AppRootState} from './state/store';
 
 const rootReducer = combineReducers({
@@ -21,7 +21,7 @@ const initialGlobalState: AppRootState = {
                 id: v1(),
                 title: 'CSS&HTML',
                 status: TaskStatuses.New,
-                todoListId: todolistId1,
+                todoListId: 'todolistId1',
                 startDate: '',
                 deadline: '',
                 addedDate: '',
@@ -33,7 +33,7 @@ const initialGlobalState: AppRootState = {
                 id: v1(),
                 title: 'JS',
                 status: TaskStatuses.Completed,
-                todoListId: todolistId1,
+                todoListId: 'todolistId1',
                 startDate: '',
                 deadline: '',
                 addedDate: '',
@@ -47,7 +47,7 @@ const initialGlobalState: AppRootState = {
                 id: v1(),
                 title: 'Book',
                 status: TaskStatuses.Completed,
-                todoListId: todolistId1,
+                todoListId: 'todolistId1',
                 startDate: '',
                 deadline: '',
                 addedDate: '',
@@ -59,7 +59,7 @@ const initialGlobalState: AppRootState = {
                 id: v1(),
                 title: 'Milk',
                 status: TaskStatuses.Completed,
-                todoListId: todolistId1,
+                todoListId: 'todolistId1',
                 startDate: '',
                 deadline: '',
                 addedDate: '',
@@ -70,10 +70,3 @@ const initialGlobalState: AppRootState = {
         ]
     }
 }
-
-// export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootState)
-
-// export const ReduxStoreProviderDecorator = (storyFn: any) => {
-//     return <Provider store={storyBookStore}>{storyFn()}</Provider>
-// }
-//
