@@ -7,7 +7,7 @@ import {
     removeTodolistAC, setTodolistsAC,
     TodolistDomainType,
     todolistsReducer
-} from '../state/todolists-reducer';
+} from './todolists-reducer';
 
 let todolistId1: string = v1();
 let todolistId2: string = v1();

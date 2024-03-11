@@ -1,9 +1,9 @@
-import {todolistsReducer} from './state/todolists-reducer';
+import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import {v1} from 'uuid';
 import {combineReducers} from 'redux';
-import {tasksReducer} from './state/tasks-reducer';
-import {TaskPriorities, TaskStatuses} from './api/todolists-api.js';
-import {AppRootState} from './state/store';
+import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
+import {TaskPriorities, TaskStatuses} from '../api/todolists-api.js';
+import {AppRootState} from '../app/store';
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
