@@ -12,8 +12,8 @@ import {
 let todolistId1: string = v1();
 let todolistId2: string = v1();
 let startState: Array<TodolistDomainType> = [
-    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-    {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
+    {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+    {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'}
 ]
 
 test('correct todolist should be removed', () => {
@@ -31,8 +31,8 @@ test('correct todolist should be added', () => {
     let newTodolistTitle = 'New Todolist';
 
     const startState: Array<TodolistDomainType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'}
     ]
 
     const endState = todolistsReducer(startState, addTodolistAC({
@@ -53,8 +53,8 @@ test('correct todolist should change its name', () => {
     let newTodolistTitle = 'New Todolist';
 
     const startState: Array<TodolistDomainType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'}
     ]
 
     const action = {
@@ -76,8 +76,8 @@ test('correct filter of todolist should be changed', () => {
     let newFilter: FilterValuesType = 'completed';
 
     const startState: Array<TodolistDomainType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: ''},
-        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: ''}
+        {id: todolistId1, title: 'What to learn', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'},
+        {id: todolistId2, title: 'What to buy', filter: 'all', order: 0, addedDate: '', entityStatus: 'idle'}
     ]
 
     const action = {
