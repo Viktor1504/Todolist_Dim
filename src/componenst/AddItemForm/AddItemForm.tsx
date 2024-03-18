@@ -4,27 +4,28 @@ import {ControlPoint} from '@mui/icons-material';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
-export const AddItemForm = memo((props: AddItemFormPropsType) => {
+export const AddItemForm = memo(({addItem, disabled = false}: AddItemFormPropsType) => {
     console.log('AddItemForm is called')
-    const [newTaskTitle, setNewTaskTitle] = useState<string>('')
+    const [newTaskTitle, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
     const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)
+        setTitle(e.currentTarget.value)
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
             setError(null)
         }
         if (e.key === 'Enter' && newTaskTitle.trim() !== '') {
-            props.addItem(newTaskTitle)
-            setNewTaskTitle('')
+            addItem(newTaskTitle)
+            setTitle('')
         }
     }
-    const addTask = () => {
+    const addItemHandler = () => {
         if (newTaskTitle.trim() !== '') {
-            props.addItem(newTaskTitle.trim())
-            setNewTaskTitle('')
+            addItem(newTaskTitle.trim())
+            setTitle('')
         } else {
             setError('Title is required')
         }
@@ -39,8 +40,9 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                        onKeyDown={onKeyDownHandler}
                        error={!!error}
                        helperText={error}
+                       disabled={disabled}
             />
-            <IconButton onClick={addTask} color={'primary'}>
+            <IconButton onClick={addItemHandler} color={'primary'} disabled={disabled}>
                 <ControlPoint/>
             </IconButton>
         </div>
