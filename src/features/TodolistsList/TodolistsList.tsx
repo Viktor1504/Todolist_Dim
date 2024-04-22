@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../app/store';
+import {useAppDispatch, useAppSelector} from '../../app/store';
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -15,18 +14,20 @@ import {TaskStatuses} from '../../api/todolists-api';
 import {Grid, Paper} from '@mui/material';
 import {AddItemForm} from '../../componenst/AddItemForm/AddItemForm';
 import {TodoList} from './Todolist/TuduList';
+import {Navigate} from 'react-router-dom';
 
 type PropsType = {
     demo?: boolean
 }
 
 export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
-    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const dispatch = useDispatch()
+    const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
+    const tasks = useAppSelector<TasksStateType>(state => state.tasks)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (demo) return
+        if (demo || !isLoggedIn) return
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -61,6 +62,10 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
         dispatch(changeTodolistFilterAC(todolistId, value))
     }, [])
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
 
     return (
         <>

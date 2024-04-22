@@ -1,7 +1,11 @@
-import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from './todolists-reducer';
+import {
+    AddTodolistActionType,
+    ClearAllTodolistsActionType,
+    RemoveTodolistActionType,
+    SetTodolistsActionType
+} from './todolists-reducer';
 import {TaskPriorities, TaskStatuses, TaskType, todolistsApi, UpdateTaskModelType} from '../../api/todolists-api';
-import {Dispatch} from 'redux';
-import {AllActionsType, AppRootStateType, AppThunk} from '../../app/store';
+import {AppRootStateType, AppThunk} from '../../app/store';
 import {setAppStatusAC} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
@@ -37,6 +41,8 @@ export const tasksReducer = (state: TasksStateType = initialState, {
         }
         case 'SET-TASKS' :
             return {...state, [payload.todolistId]: payload.tasks}
+        case 'CLEAR_ALL_TODOLISTS':
+            return {}
         default:
             return state
     }
@@ -52,7 +58,7 @@ export const setTasksAC = (todolistId: string, tasks: TaskType[]) =>
     ({type: 'SET-TASKS', payload: {todolistId, tasks}}) as const
 
 // thunks
-export const fetchTasksTC = (todoListId: string): AppThunk => (dispatch) => {
+export const fetchTasksTC = (todoListId: string): AppThunk => dispatch => {
     dispatch(setAppStatusAC('loading'))
     todolistsApi.getTasks(todoListId)
         .then(res => {
@@ -63,7 +69,7 @@ export const fetchTasksTC = (todoListId: string): AppThunk => (dispatch) => {
             handleServerNetworkError(error, dispatch)
         })
 }
-export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => (dispatch) => {
+export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => dispatch => {
     dispatch(setAppStatusAC('loading'))
     todolistsApi.deleteTask(todolistId, taskId)
         .then(res => {
@@ -78,7 +84,7 @@ export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => (d
             handleServerNetworkError(error, dispatch)
         })
 }
-export const addTaskTC = (todolistId: string, taskTitle: string): AppThunk => (dispatch) => {
+export const addTaskTC = (todolistId: string, taskTitle: string): AppThunk => dispatch => {
     dispatch(setAppStatusAC('loading'))
     todolistsApi.createTask(todolistId, taskTitle)
         .then(res => {
@@ -146,3 +152,4 @@ export type TasksActionsType =
     | AddTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
+    | ClearAllTodolistsActionType

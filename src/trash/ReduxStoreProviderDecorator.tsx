@@ -1,7 +1,7 @@
 // import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 // import {v1} from 'uuid';
 // import {combineReducers, legacy_createStore} from 'redux';
-// import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
+// import {loginReducer} from '../features/TodolistsList/tasks-reducer';
 // import {TaskPriorities, TaskStatuses} from '../api/todolists-api.js';
 // import {AppRootState} from '../app/store';
 // import {Provider} from 'react-redux';
@@ -9,7 +9,7 @@
 //
 // const rootReducer = combineReducers({
 //     todolists: todolistsReducer,
-//     tasks: tasksReducer
+//     tasks: loginReducer
 // })
 //
 // const initialGlobalState: AppRootState = {

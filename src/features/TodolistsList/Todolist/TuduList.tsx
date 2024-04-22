@@ -8,6 +8,7 @@ import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 import {fetchTodolistsTC, FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import {useDispatch} from 'react-redux';
 import {fetchTasksTC} from '../tasks-reducer';
+import {useAppDispatch} from '../../../app/store';
 
 type TodoListPropsType = {
     todolist: TodolistDomainType
@@ -24,7 +25,7 @@ type TodoListPropsType = {
 
 export const TodoList = memo(({demo = false, ...props}: TodoListPropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (demo) return
