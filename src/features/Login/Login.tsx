@@ -20,7 +20,7 @@ import {ErrorSnackbar} from '../../componenst/ErrorSnackbar/ErrorSnackbar';
 export const Login = () => {
 
     const dispatch = useAppDispatch()
-    const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const status = useAppSelector<RequestStatusType>(state => state.app.status as RequestStatusType)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
     type FormikErrorType = {

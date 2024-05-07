@@ -28,6 +28,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
     useEffect(() => {
         if (demo || !isLoggedIn) return
+
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -49,7 +50,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title));
-    }, [])
+    }, [dispatch])
 
     const removeTodolist = useCallback((todolistId: string) => {
         dispatch(removeTodolistTC(todolistId))
@@ -59,8 +60,8 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
         dispatch(changeTodolistTitleTC(todolistId, newTitle))
     }, [])
 
-    const changeFilter = useCallback((todolistId: string, value: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC(todolistId, value))
+    const changeFilter = useCallback((todolistId: string, filter: FilterValuesType) => {
+        dispatch(changeTodolistFilterAC({todolistId, filter}))
     }, [])
 
     if (!isLoggedIn) {

@@ -23,7 +23,7 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     const dispatch = useAppDispatch()
-    const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const status = useAppSelector<RequestStatusType>(state => state.app.status as RequestStatusType)
     const isInitialized = useAppSelector<boolean>(state => state.auth.isInitialized)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
