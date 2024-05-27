@@ -4,6 +4,7 @@ import {setAppStatusAC} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from './todolists-reducer';
+import {cleanupOnLogout} from '../../common/actions/common-actions';
 
 const slice = createSlice({
         name: 'tasks',
@@ -16,8 +17,8 @@ const slice = createSlice({
                     tasks.splice(index, 1)
                 }
             },
-            addTaskAC: (state, action: PayloadAction<{ task: TaskType }>) => {
-                state[action.payload.task.todoListId].unshift(action.payload.task)
+            addTaskAC: (state, action: PayloadAction<TaskType>) => {
+                state[action.payload.todoListId].unshift(action.payload)
             },
             updateTaskAC: (state, action: PayloadAction<{
                 todolistId: string,
@@ -36,7 +37,7 @@ const slice = createSlice({
         },
         extraReducers: (builder) => {
             builder.addCase(addTodolistAC, (state, action) => {
-                state[action.payload.todolist.id] = []
+                state[action.payload.id] = []
             })
             builder.addCase(removeTodolistAC, (state, action) => {
                 delete state[action.payload.todolistId]
@@ -45,6 +46,9 @@ const slice = createSlice({
                 action.payload.todolists.forEach(tl => {
                     state[tl.id] = []
                 })
+            })
+            builder.addCase(cleanupOnLogout, () => {
+                return {}
             })
         }
     }
@@ -85,7 +89,7 @@ export const addTaskTC = (todolistId: string, taskTitle: string): AppThunk => di
     todolistsApi.createTask(todolistId, taskTitle)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(addTaskAC({task: res.data.data.item}))
+                dispatch(addTaskAC(res.data.data.item))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)

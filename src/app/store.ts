@@ -23,10 +23,10 @@ export const store = configureStore({
 )
 
 // определить автоматически тип всего объекта состояния
-export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof store.getState>
 
 // создаем тип диспатча который принимает как AC так и TC
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, unknown, AnyAction>
 
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>()
 

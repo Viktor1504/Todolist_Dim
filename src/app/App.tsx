@@ -14,18 +14,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {TodolistsList} from '../features/TodolistsList/TodolistsList';
 import {ErrorSnackbar} from '../componenst/ErrorSnackbar/ErrorSnackbar';
 import {useAppDispatch, useAppSelector} from './store';
-import {RequestStatusType} from './app-reducer';
 import {initializeAppTC, logoutTC} from '../features/Login/auth-reducer';
+import {selectIsInitialized, selectIsLoggedIn, selectStatus} from './app-selectors';
 
 type PropsType = {
     demo?: boolean
 }
 
-function App({demo = false}: PropsType) {
+function App() {
+    const status = useAppSelector(selectStatus)
+    const isInitialized = useAppSelector(selectIsInitialized)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
     const dispatch = useAppDispatch()
-    const status = useAppSelector<RequestStatusType>(state => state.app.status as RequestStatusType)
-    const isInitialized = useAppSelector<boolean>(state => state.auth.isInitialized)
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())

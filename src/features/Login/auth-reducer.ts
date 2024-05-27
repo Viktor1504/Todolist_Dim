@@ -2,8 +2,8 @@ import {AppThunk} from '../../app/store';
 import {setAppStatusAC} from '../../app/app-reducer';
 import {authAPI, LoginParamsType} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {clearAllTodolistsAC} from '../TodolistsList/todolists-reducer';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {cleanupOnLogout} from '../../common/actions/common-actions';
 
 const slice = createSlice({
     name: 'auth',
@@ -47,7 +47,7 @@ export const logoutTC = (): AppThunk => dispatch => {
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({value: false}))
-                dispatch(clearAllTodolistsAC({}))
+                dispatch(cleanupOnLogout())
                 dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)

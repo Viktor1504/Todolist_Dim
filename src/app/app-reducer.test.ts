@@ -1,13 +1,13 @@
 import {appReducer, setAppErrorAC, setAppStatusAC} from './app-reducer';
 
-let startState =
+let startState: { status: string, error: null }
 
-    beforeEach(() => {
-        let startState = {
-            status: 'idle',
-            error: null
-        }
-    })
+beforeEach(() => {
+    let startState = {
+        status: 'idle',
+        error: null
+    }
+})
 
 test('correct error message should be set', () => {
     const endState = appReducer(startState, setAppErrorAC({error: 'some error'}))
