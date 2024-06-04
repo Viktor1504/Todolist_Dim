@@ -10,15 +10,20 @@ import {
     LinearProgress,
     TextField
 } from '@mui/material';
-import {useFormik} from 'formik';
+import {FormikHelpers, useFormik} from 'formik';
 import {useAppDispatch, useAppSelector} from '../../app/store';
 import {loginTC} from './auth-reducer';
 import {Navigate} from 'react-router-dom';
 import {RequestStatusType} from '../../app/app-reducer';
 import {ErrorSnackbar} from '../../componenst/ErrorSnackbar/ErrorSnackbar';
 
-export const Login = () => {
+type FormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 
+export const Login = () => {
     const dispatch = useAppDispatch()
     const status = useAppSelector<RequestStatusType>(state => state.app.status as RequestStatusType)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
@@ -49,9 +54,14 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
-            formik.resetForm()
+        onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
+            const action = await dispatch(loginTC(values))
+            if (loginTC.rejected.match(action)) {
+                if (action.payload?.fieldsErrors?.length) {
+                    const error = action.payload?.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            }
         },
     })
 
